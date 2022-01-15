@@ -27,10 +27,13 @@ class Game_play:
         self.two = settings[1]
         if self.two == "easy":
             dif = 0
-        elif self.two == "hard":
+            k = 0
+        elif self.two == "normal":
             dif = 1
+            k = 4
         else:
             dif = 2
+            k = 7
 
         self.wordr = rand_word.get_word(lang, dif, sp).lower()
         self.word = list(self.wordr)
@@ -38,9 +41,10 @@ class Game_play:
         self.word_star = ["*" for i in range(len(self.wordr))]
 
         print(self.wordr)
-        self.Game_start()
+        self.Game_start(k)
 
-    def get_word(language, difficulty, p_speech):
+    def get_word(self, language, difficulty, p_speech):
+        k = 0
         if language == "rus":
             f_name = 'rus'
         elif language == "eng":
@@ -82,20 +86,19 @@ class Game_play:
                 words.extend(w)
                 w = []
         # print(len(words))
-        rez = random.choice(words)
+        rez = random.choice(words), k
 
         words = []
         return rez
 
-    def Game_start(self):
-        background = pygame.transform.scale(load_image(f"Game_0.png"), (width, height))
+    def Game_start(self, k):
+        background = pygame.transform.scale(load_image(f"Game_{k}.png"), (width, height))
         screen.blit(background, (0, 0))
 
         font = pygame.font.Font(None, 50)
         text_star = font.render(''.join(self.word_star), True, (0, 0, 0))
         screen.blit(text_star, (492, 300))
 
-        k = 0
         self.used_word = []
         self.not_used_word = []
 
@@ -120,8 +123,7 @@ class Game_play:
                         # msg_letter = ''
 
                     elif 537 < x < 1072 and 506 < y < 541 and msg_letter == '':
-                        print('Введите букву')
-
+                        pass
                     elif 485 < x < 1200 and 435 < y < 490:
                         pygame.draw.rect(screen, "white", [(485, 435), (100, 50)], width=0)
                         text_stick = font.render('|', True, (0, 0, 0))
@@ -135,7 +137,7 @@ class Game_play:
                         letter_is = False
 
                     if 573 < x < 1072 and 675 < y < 705 and msg_word != '':
-                        k = self.check_word(msg_word, k)
+                        k += self.check_word(msg_word, k)
                         msg_letter = ""
 
                     elif 573 < x < 1072 and 675 < y < 705 and msg_word == '':
@@ -175,9 +177,7 @@ class Game_play:
 
     def check_letter(self, letter_is, k):
         letter = letter_is.lower()
-        print(letter)
-        print(self.used_word)
-        if k < 10:
+        if k < 9:
             if letter in self.not_used_word or letter in self.used_word:
                 er = "Введите не использованную букву"
             elif letter == '' or letter.isalpha() is False:
@@ -193,9 +193,7 @@ class Game_play:
             elif letter not in self.word:
                 er = "Такой буквы нет"
                 self.not_used_word.append(letter)
-                print(self.not_used_word)
                 k += 1
-            print(er)
 
             font = pygame.font.Font(None, 50)
             background = pygame.transform.scale(load_image(f"Game_{k}.png"), (width, height))
@@ -225,7 +223,7 @@ class Game_play:
             screen.blit(background, (0, 0))
             text_stick = font.render(str("Неправильное слово"), True, (0, 0, 0))
             screen.blit(text_stick, (485, 368))
-            if k == 10:
+            if k < 10:
                 Lost()
             else:
                 return k
@@ -409,7 +407,7 @@ def Win():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # print(event.pos)
+                print(event.pos)
                 if 9 < event.pos[0] < 760 and 615 < event.pos[1] < 710:
                     start()
                 if 782 < event.pos[0] < 1187 and 616 < event.pos[1] < 707:
@@ -432,7 +430,9 @@ def Lost():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if 610 < event.pos[0] < 1150 and 660 < event.pos[1] < 700:
+                print(event.pos)
+
+                if 17 < event.pos[0] < 766 and 618 < event.pos[1] < 717:
                     start()
                 if 415 < event.pos[0] < 785 and 490 < event.pos[1] < 580:
                     exit()
