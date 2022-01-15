@@ -172,6 +172,7 @@ class Game_play:
 
             pygame.display.flip()
             clock.tick(fps)
+
     pygame.quit()
 
     def check_letter(self, letter_is, k):
@@ -255,16 +256,18 @@ def start_screen():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 # print("Start")
                 if 545 < event.pos[0] < 655 and 408 < event.pos[1] < 426:
                     rules()
+                    running = False
+
                 if 455 < event.pos[0] < 640 and 274 < event.pos[1] < 380:
+                    running = False
                     return
 
         pygame.display.flip()
         clock.tick(fps)
-    pygame.quit()
 
 
 def rules():
@@ -288,14 +291,13 @@ def rules():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 # print("Rules")
                 if 14 < event.pos[0] < 77 and 678 < event.pos[1] < 698:
-                    start_screen()
+                    startit()
                     running = False
         pygame.display.flip()
         clock.tick(fps)
-    pygame.quit()
 
 
 def Leng():
@@ -310,7 +312,7 @@ def Leng():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 # print(event.pos)
                 if 130 < event.pos[0] < 432 and 230 < event.pos[1] < 360:
                     return "rus"
@@ -334,7 +336,7 @@ def Difficulty():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 # print(event.pos)
                 if 74 < event.pos[0] < 380 and 233 < event.pos[1] < 360:
                     running = False
@@ -387,7 +389,6 @@ def Speech_part(f, s, e):
                         running = False
                         return f, s
 
-
         pygame.display.flip()
         clock.tick(fps)
     pygame.quit()
@@ -404,7 +405,7 @@ def Win():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 # print(event.pos)
                 if 9 < event.pos[0] < 760 and 615 < event.pos[1] < 710:
                     start()
@@ -414,6 +415,7 @@ def Win():
         pygame.display.flip()
         clock.tick(fps)
     pygame.quit()
+
 
 def Lost():
     background = pygame.transform.scale(load_image("Lost.png"), (width, height))
@@ -426,7 +428,7 @@ def Lost():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 if 610 < event.pos[0] < 1150 and 660 < event.pos[1] < 700:
                     start()
                 if 415 < event.pos[0] < 785 and 490 < event.pos[1] < 580:
@@ -434,6 +436,7 @@ def Lost():
         pygame.display.flip()
         clock.tick(fps)
     pygame.quit()
+
 
 def show_settings(settings):
     background = pygame.transform.scale(load_image("Show.png"), (width, height))
@@ -473,7 +476,7 @@ def show_settings(settings):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 if 610 < event.pos[0] < 1150 and 660 < event.pos[1] < 700:
                     settings = [Leng(), Difficulty(), Speech_part(0, 0, 0)]
                     show_settings(settings)
@@ -484,10 +487,15 @@ def show_settings(settings):
         clock.tick(fps)
     pygame.quit()
 
+
 def start():
     settings = [Leng(), Difficulty(), Speech_part(0, 0, 0)]
     show_settings(settings)
     return
+
+
+def startit():
+    start_screen()
 
 
 pygame.init()
@@ -500,7 +508,7 @@ running = True
 fps = 60
 clock = pygame.time.Clock()
 
-start_screen()
+startit()
 settings = [Leng(), Difficulty(), Speech_part(0, 0, 0)]
 show_settings(settings)
 
@@ -516,6 +524,3 @@ while running:
     clock.tick(fps)
 
 pygame.quit()
-
-if __name__ == '__main__':
-    print("")
