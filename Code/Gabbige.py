@@ -116,11 +116,8 @@ class Game_play:
                     # print(x, y)
 
                     if 537 < x < 1072 and 506 < y < 541 and msg_letter != '':
-                        if msg_letter in self.used_word:
-                            text_stick = font.render(str("Введите не использованную букву"), True, (0, 0, 0))
-                            screen.blit(text_stick, (485, 368))
-                        else:
-                            err, k = self.check_letter(msg_letter, k)
+                        err, k = self.check_letter(msg_letter, k)
+                        # msg_letter = ''
 
                     elif 537 < x < 1072 and 506 < y < 541 and msg_letter == '':
                         print('Введите букву')
@@ -130,7 +127,7 @@ class Game_play:
                         text_stick = font.render('|', True, (0, 0, 0))
                         screen.blit(text_stick, (485, 450))
                         letter_is = True
-                        msg_letter = ''
+
 
                     elif letter_is:
                         pygame.draw.rect(screen, "white", [(485, 435), (100, 50)], width=0)
@@ -139,6 +136,7 @@ class Game_play:
 
                     if 573 < x < 1072 and 675 < y < 705 and msg_word != '':
                         k = self.check_word(msg_word, k)
+                        msg_letter = ""
 
                     elif 573 < x < 1072 and 675 < y < 705 and msg_word == '':
                         print('Введите слово')
@@ -177,8 +175,12 @@ class Game_play:
 
     def check_letter(self, letter_is, k):
         letter = letter_is.lower()
+        print(letter)
+        print(self.used_word)
         if k < 10:
-            if letter == '' or letter.isalpha() is False:
+            if letter in self.not_used_word or letter in self.used_word:
+                er = "Введите не использованную букву"
+            elif letter == '' or letter.isalpha() is False:
                 er = "Введите букву"
             elif letter in self.word:
                 er = "Есть такая буква!"
@@ -191,8 +193,9 @@ class Game_play:
             elif letter not in self.word:
                 er = "Такой буквы нет"
                 self.not_used_word.append(letter)
+                print(self.not_used_word)
                 k += 1
-            # print(letter)
+            print(er)
 
             font = pygame.font.Font(None, 50)
             background = pygame.transform.scale(load_image(f"Game_{k}.png"), (width, height))
@@ -206,10 +209,10 @@ class Game_play:
             screen.blit(text_stick, (490, 70))
             text_stick = font.render(', '.join(self.not_used_word), True, (0, 0, 0))
             screen.blit(text_stick, (490, 176))
+
             return er, k
         else:
             Lost()
-            pygame.quit()
 
     def check_word(self, word, k):
         name = word.lower()
