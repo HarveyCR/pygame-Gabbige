@@ -340,13 +340,10 @@ def Difficulty():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # print(event.pos)
                 if 74 < event.pos[0] < 380 and 233 < event.pos[1] < 360:
-                    running = False
                     return "easy"
                 elif 475 < event.pos[0] < 775 and 242 < event.pos[1] < 360:
-                    running = False
                     return "normal"
                 elif 840 < event.pos[0] < 1100 and 236 < event.pos[1] < 360:
-                    running = False
                     return 'hard'
 
         pygame.display.flip()
