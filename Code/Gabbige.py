@@ -137,8 +137,8 @@ class Game_play:
                         letter_is = False
 
                     if 573 < x < 1072 and 675 < y < 705 and msg_word != '':
-                        k += self.check_word(msg_word, k)
-                        msg_letter = ""
+                        k = self.check_word(msg_word, k)
+                        msg_word = ""
 
                     elif 573 < x < 1072 and 675 < y < 705 and msg_word == '':
                         print('Введите слово')
@@ -223,7 +223,7 @@ class Game_play:
             screen.blit(background, (0, 0))
             text_stick = font.render(str("Неправильное слово"), True, (0, 0, 0))
             screen.blit(text_stick, (485, 368))
-            if k < 10:
+            if k == 10:
                 Lost()
             else:
                 return k
@@ -340,10 +340,13 @@ def Difficulty():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # print(event.pos)
                 if 74 < event.pos[0] < 380 and 233 < event.pos[1] < 360:
+                    running = False
                     return "easy"
                 elif 475 < event.pos[0] < 775 and 242 < event.pos[1] < 360:
+                    running = False
                     return "normal"
                 elif 840 < event.pos[0] < 1100 and 236 < event.pos[1] < 360:
+                    running = False
                     return 'hard'
 
         pygame.display.flip()
