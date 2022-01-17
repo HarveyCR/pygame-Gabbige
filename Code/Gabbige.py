@@ -387,7 +387,6 @@ def Speech_part(f, s, e):
                         screen.blit(background, (0, 0))
                         e = 0
                     else:
-                        running = False
                         return f, s
 
         pygame.display.flip()
