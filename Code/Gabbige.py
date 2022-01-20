@@ -408,7 +408,7 @@ def Win():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # print(event.pos)
                 if 9 < event.pos[0] < 760 and 615 < event.pos[1] < 710:
-                    start()
+                    show_settings()
                 if 782 < event.pos[0] < 1187 and 616 < event.pos[1] < 707:
                     exit()
 
@@ -431,7 +431,7 @@ def Lost():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # print(event.pos)
                 if 17 < event.pos[0] < 766 and 618 < event.pos[1] < 717:
-                    start()
+                    show_settings()
                 if 415 < event.pos[0] < 785 and 490 < event.pos[1] < 580:
                     exit()
         pygame.display.flip()
